@@ -1,0 +1,11 @@
+ipykernel
+langchain
+langgraph
+langchain_community
+langchain_core
+langchain_classic
+langchain_huggingface
+langchain-text-splitters
+pinecone==7
+langchain_pinecone
+sentence-transformers
