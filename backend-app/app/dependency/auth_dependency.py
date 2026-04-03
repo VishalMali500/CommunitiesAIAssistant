@@ -5,11 +5,14 @@ from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 from fastapi import Depends
 from app.utils.utility_functions import check_hashed_similarity
-
+from fastapi.security import OAuth2PasswordBearer
+import jwt
+from app.core.config import Settings
 
 engine = create_engine("postgresql://postgres:vishal@localhost:5432/UserDatabase")
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+bearer  = OAuth2PasswordBearer(tokenUrl="/api/v1/token")
+set_obj = Settings()
 
 
 def get_user_role(user : CreateUser):
@@ -38,3 +41,11 @@ def verify_user_and_password(user : LoginUser, db : Session = Depends(get_db), v
         raise HTTPException(detail="Incorrect Password", status_code=404)
     return True
         
+def get_active_user(token : str = Depends(bearer), db : Session = Depends(get_db) ):
+    token_data = jwt.decode(token, set_obj.jwt_secret_code, algorithms="HS256")
+    if token_data.get("id") is None:
+        raise HTTPException(status_code=404, detail="Invalid Token")
+    user  = db.query(DbUser).filter(DbUser.id  == token_data.get("id") ).first().id
+    if user is None :
+        raise HTTPException(status_code=404, detail="user not found in database")
+    return user
