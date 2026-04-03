@@ -6,6 +6,7 @@ from app.utils.utility_functions import get_hashed_password, create_token
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from app.utils.utility_functions import check_hashed_similarity
 from app.dependency.auth_dependency import get_active_user
+from app.services.chat_service import chatService
 
 
 router= APIRouter()
@@ -35,7 +36,7 @@ async def createAccount(form_data : OAuth2PasswordRequestForm = Depends() , db :
 
 @router.post("/chat")
 async def chat(query : str , user = Depends(get_active_user)):
-    return {"user": user , "query" : query }
+    return await chatService(query)
 
 
 

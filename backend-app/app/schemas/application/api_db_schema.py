@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Integer, String, Boolean, Column
+from sqlalchemy import Integer, String, Boolean, Column, DateTime
 
 import re
 
@@ -44,5 +44,16 @@ class DbUser(Base):
     id = Column(String, nullable=False, primary_key=True, index=True)
     hashed_password = Column(String, nullable= False)
     role = Column(String, nullable=False)
+
+
+class chatThreds(Base):
+    __tablename__ = "ChatThreadsTable"
+    id = Column(String, nullable= False, primary_key= True, index= True)
+    user_id = Column()
+    title = Column(String, nullable= False)
+    created_at = Column(DateTime, nullable= False)
+    updated_at = Column(DateTime, nullable= False)
+
+
 
 
