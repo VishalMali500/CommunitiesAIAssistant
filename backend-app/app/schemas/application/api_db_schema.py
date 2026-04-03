@@ -31,9 +31,18 @@ class CreateUser(BaseModel):
 
         return value
     
+
+
+class LoginUser(BaseModel):
+    id : str 
+    password : str
+
+
 class DbUser(Base):
     __tablename__ = "UserDataTable"
     name = Column(String, nullable=False)
     id = Column(String, nullable=False, primary_key=True, index=True)
     hashed_password = Column(String, nullable= False)
     role = Column(String, nullable=False)
+
+

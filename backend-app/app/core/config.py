@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     llm_api_key : str = "asdf"
     cascading_model : str =  "groq:qwen/qwen3-32b"
     models :List[str] = ["groq:openai/gpt-oss-120b", "groq:qwen/qwen3-32b","groq:whisper-large-v3-turbo"]
+    token_expiry_time : int = 30
+    jwt_secret_code : str = "VishalMali"
     class Config:
         env_file = ".env"
         extra = "ignore"

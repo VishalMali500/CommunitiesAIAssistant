@@ -9,3 +9,8 @@ langchain-text-splitters
 pinecone==7
 langchain_pinecone
 sentence-transformers
+Pyjwt
+fastapi
+bcrypt==4.0.1 
+passlib[bcrypt]==1.7.4
+psycopg2
