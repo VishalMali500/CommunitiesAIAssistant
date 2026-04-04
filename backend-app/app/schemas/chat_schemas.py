@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-
+from uuid import UUID
 class UserQuery(BaseModel):
-    chatid: Optional[str] = None
+    chatid: UUID
     query : str 

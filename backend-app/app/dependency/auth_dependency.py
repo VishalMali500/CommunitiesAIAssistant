@@ -1,6 +1,6 @@
 from app.core.get_user_role import getrole
 from app.schemas.application.api_db_schema import CreateUser, LoginUser, DbUser
-from fastapi import HTTPException
+from fastapi import HTTPException, Request
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 from fastapi import Depends
@@ -49,3 +49,8 @@ def get_active_user(token : str = Depends(bearer), db : Session = Depends(get_db
     if user is None :
         raise HTTPException(status_code=404, detail="user not found in database")
     return user
+
+def get_embeddings(request : Request):
+    return request.app.state.embedding_model
+def get_embeddings(request : Request):
+    return request.app.state.vdatabse

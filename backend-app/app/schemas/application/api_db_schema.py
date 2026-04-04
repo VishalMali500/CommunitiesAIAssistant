@@ -1,8 +1,10 @@
 from pydantic import BaseModel, field_validator
-from sqlalchemy.orm import declarative_base
-from sqlalchemy import Integer, String, Boolean, Column, DateTime
-
+from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy import Integer, String, Boolean, Column, DateTime, ForeignKey
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 import re
+from typing import Optional
 
 Base = declarative_base()
 
@@ -44,15 +46,33 @@ class DbUser(Base):
     id = Column(String, nullable=False, primary_key=True, index=True)
     hashed_password = Column(String, nullable= False)
     role = Column(String, nullable=False)
+    chatthreads = relationship("chatThreads", back_populates= "user", cascade="all, delete-orphan")
 
-
-class chatThreds(Base):
+class chatThreads(Base):
     __tablename__ = "ChatThreadsTable"
-    id = Column(String, nullable= False, primary_key= True, index= True)
-    user_id = Column()
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4,index=True)
+    user_id = Column(String, ForeignKey("UserDataTable.id"),nullable=False)
     title = Column(String, nullable= False)
     created_at = Column(DateTime, nullable= False)
     updated_at = Column(DateTime, nullable= False)
+    user = relationship("DbUser", back_populates="chatthreads" )
+    chatlists = relationship("chatLists", back_populates="chatthread", cascade="all, delete-orphan")
+
+class chatLists(Base):
+    __tablename__ = "ChatLists"
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4,index=True)
+    chatthread_id = Column(UUID(as_uuid=True), ForeignKey("ChatThreadsTable.id"), nullable=False)
+    content = Column(String, nullable=False)
+    role = Column(String, nullable= False)
+    created_at = Column(DateTime, nullable= False)
+    chatthread = relationship("chatThreads", back_populates="chatlists")
+
+
+class newChat(BaseModel):
+    threadid : Optional[uuid.UUID] = None
+    user : str
+    query : str 
+
 
 
 

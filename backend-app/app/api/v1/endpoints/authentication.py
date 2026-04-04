@@ -35,8 +35,9 @@ async def createAccount(form_data : OAuth2PasswordRequestForm = Depends() , db :
     return {"access_token" : token, "token_type": "bearer"}
 
 @router.post("/chat")
-async def chat(query : str , user = Depends(get_active_user)):
-    return await chatService(query)
+async def newChat(query : str , user = Depends(get_active_user)):
+    return await chatService(query, user)
+
 
 
 
