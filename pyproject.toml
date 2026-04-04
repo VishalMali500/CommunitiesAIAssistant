@@ -20,6 +20,8 @@ dependencies = [
     "pinecone==7",
     "psycopg2>=2.9.11",
     "pyjwt>=2.12.1",
+    "pyreadline3>=3.5.4",
     "python-multipart>=0.0.22",
     "sentence-transformers>=5.3.0",
+    "uvicorn>=0.43.0",
 ]

@@ -7,7 +7,6 @@ from app.api.v1.routers import router
 from pinecone import Pinecone
 from sentence_transformers import SentenceTransformer
 from langchain_pinecone import PineconeVectorStore
-
 from sqlalchemy import create_engine
 from app.schemas.application.api_db_schema import DbUser, chatThreads, chatLists
 engine = create_engine("postgresql://postgres:vishal@localhost:5432/UserDatabase")

@@ -11,3 +11,7 @@ class RoleSettings(BaseModel):
     
 def getrole()-> RoleSettings:
     return RoleSettings()
+
+def get_access_list(user: str):
+    access_db = {"vishal": ["", ""], "vaibhav": ["",""], "shiva": ["", ""]}
+    return access_db[user]
